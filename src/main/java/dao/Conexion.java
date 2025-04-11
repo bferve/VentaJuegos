@@ -6,16 +6,16 @@ import java.sql.*;
 
 public class Conexion {
     
-    private static String url2 = "jdbc:postgresql://db.bcngexdxtuvkgnndqsac.supabase.co:5432/postgres?user=postgres&password=Mundolibre.123";
-    private static String url ="jdbc:postgresql://db.bcngexdxtuvkgnndqsac.supabase.co:5432/postgres";
-    private static String user="postgres";
-    private static String pass = "Mundolibre.123";
+    
+    private static String url ="";
+    private static String user="";
+    private static String pass = "";
     private static Connection con = null;
     
     public static Connection conectar(){
         
         try{
-            con = DriverManager.getConnection(url2);
+            con = DriverManager.getConnection(url,user,pass);
             System.out.println("Conexion Exitosa");
             
         }catch(SQLException e){
