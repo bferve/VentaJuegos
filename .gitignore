@@ -1,3 +1,4 @@
 #variables de entorno 
 .env
 *.env
+/nbproject/
