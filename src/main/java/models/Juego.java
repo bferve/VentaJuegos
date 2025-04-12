@@ -7,7 +7,7 @@ import java.util.Date;
 public class Juego {
     private String id;
     private String titulo;
-    private String precio;
+    private double precio;
     private String genero;
     private String descripcion;
     private String imagenURL;
@@ -17,13 +17,13 @@ public class Juego {
     //private Vendedor vendedor;
     
     
-    public Juego(String id, String titulo, String precio){
+    public Juego(String id, String titulo, Double precio){
         this.id = id;
         this.titulo = titulo;
         this.precio = precio;
     }
     
-    public Juego(String id, String titulo, String descripcion, String precio,
+    public Juego(String id, String titulo, String descripcion, Double precio,
             String genero, String imagenURL, Date fechaLanzamiento,
             String desarrollador) {
         this.id = id;

@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import models.Juego;
@@ -47,7 +48,7 @@ public class ControladorTienda {
                 return new Juego(
                         rs.getString("id"),
                         rs.getString("titulo"),
-                        rs.getString("precio")
+                        rs.getDouble("precio")
                 );
             }
         }
@@ -61,9 +62,21 @@ public class ControladorTienda {
                        "FROM Juego j, Clave c"+
                        "WHERE j.juegoId = c.juegoId"+
                        "and c.Vendida = FALSE";
-        try(PreparedStatement bridge = conexion.prepareStatement(query)){
+        try(Statement bridge = conexion.createStatement();
+            ResultSet rs = bridge.executeQuery(query)){
             
+            while(rs.next()){
+                juegosConDisponibilidad.add(
+                new Juego(rs.getString("id"),
+                        rs.getString("titulo"),
+                        rs.getDouble("precio")
+                ));
+            }
         }
+        return juegosConDisponibilidad;
     }
+    
+    
+    
     
 }
