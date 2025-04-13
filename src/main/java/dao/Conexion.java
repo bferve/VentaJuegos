@@ -6,10 +6,10 @@ import java.sql.*;
 
 public class Conexion {
     
-    
-    private static String url ="";
-    private static String user="";
-    private static String pass = "";
+    //conexion local
+    private static String url ="jdbc:postgresql://localhost:5432/postgres";
+    private static String user="postgres";
+    private static String pass = "admin";
     private static Connection con = null;
     
     public static Connection conectar(){
@@ -23,7 +23,5 @@ public class Conexion {
             e.printStackTrace();
         }
         return con;
-    }
-    
-    
+    }  
 }
