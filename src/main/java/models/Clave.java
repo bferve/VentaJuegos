@@ -2,8 +2,9 @@
 package models;
 
 public class Clave {
-    private String juego_id;
+    
     private String clave;
+    private String juego_id;
     private boolean vendido;
 
     public String getJuego_id() {

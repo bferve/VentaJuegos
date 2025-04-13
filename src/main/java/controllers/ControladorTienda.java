@@ -25,22 +25,25 @@ public class ControladorTienda {
         this.usuarioActual = usuario;
     }
     
-    public List<Juego> obtenerJuegosConClave(String juegoId) throws SQLException{
+    public List<Juego> obtenerJuegosConClave() throws SQLException{
         List<Juego> juegosConDisponibilidad = new ArrayList<Juego>();
-        String query = "SELECT DISTINCT j.* c.* " + 
-                       "FROM Juego j, Clave c"+
-                       "WHERE j.juegoId = c.juegoId"+
-                       "and c.Vendida = FALSE";
+        String query = "SELECT DISTINCT j.*, c.* FROM Juego j, Clave c WHERE j.id = c.juego_id and c.vendido = FALSE";
         
         try(Statement bridge = conexion.createStatement();
             ResultSet rs = bridge.executeQuery(query)){
             
             while(rs.next()){
                 juegosConDisponibilidad.add(
-                new Juego(rs.getString("id"),
+                new Juego(
+                        rs.getString("id"),
                         rs.getString("titulo"),
-                        rs.getDouble("precio")
-                        //anadir los demas atributos
+                        rs.getDouble("precio"),
+                        rs.getString("genero"),
+                        rs.getString("descripcion"),
+                        rs.getString("imagenurl"),
+                        rs.getDate("fechalanzamiento"),
+                        rs.getString("desarrollador"),
+                        rs.getDouble("calificacion")
                 ));
             }
         }
@@ -78,8 +81,8 @@ public class ControladorTienda {
     }
     
     private void registrarVenta(String juegoID, String clave)throws SQLException{
-        String query = "INSERT INTO Venta (juego_id, usuario_id, clave, fecha)"
-                + "VALUES (?,?,?,NOW())";
+        String query = "INSERT INTO Venta (juego_id, usuario_id, clave, fecha) VALUES (?,?,?,NOW())";
+        
         try(PreparedStatement bridge = conexion.prepareStatement(query)){
             bridge.setString(1, juegoID);
             bridge.setString(2, usuarioActual.getUsuario_id());
@@ -99,18 +102,17 @@ public class ControladorTienda {
             return incrementarCantidad(juegoId);
         }
         
-        String query = "INSERT INTO Carrito (usuario_id, juego_id, cantidad) VALUES"
-                + "(?,?,1)";
+        String query = "INSERT INTO carrito (usuario_id, juego_id, cantidad) VALUES (?,?,1)";
         try(PreparedStatement bridge = conexion.prepareStatement(query)){
             bridge.setString(1, usuarioActual.getUsuario_id());
             bridge.setString(2, juegoId);
-            return bridge.executeUpdate()>0;
+            return bridge.executeUpdate() > 0;
         }
     }
     
     //Retorna si existe al menos un juego con clave disponible
     private boolean tieneClaveDisponible(String juegoId) throws SQLException{
-        String query = "SELECT * FROM Clave WHERE juegoID = ? and vendido=FALSE";
+        String query = "SELECT * FROM Clave WHERE juego_id = ? and vendido=FALSE";
         try(PreparedStatement bridge = conexion.prepareStatement(query)){
             bridge.setString(1, juegoId);
             ResultSet rs = bridge.executeQuery();
@@ -130,8 +132,7 @@ public class ControladorTienda {
     }
     
     private boolean incrementarCantidad(String juegoId) throws SQLException{
-        String query = "UPDATE carrito SET cantidad = cantidad +1 WHERE usuario_id=?"
-                + "AND juego_id =?";
+        String query = "UPDATE carrito SET cantidad = cantidad +1 WHERE usuario_id=? AND juego_id=?";
         try(PreparedStatement bridge = conexion.prepareStatement(query)){
             bridge.setString(1, usuarioActual.getUsuario_id());
             bridge.setString(2, juegoId);
@@ -140,8 +141,7 @@ public class ControladorTienda {
     }
     
     public Juego buscarJuegoId(String juegoId) throws SQLException{
-        String query = "SELECT id, titulo, precio,... FROM Juego WHERE"
-                + "id = ? ";
+        String query = "SELECT * FROM Juego WHERE id=?";
         try(PreparedStatement bridge = conexion.prepareStatement(query)){
             bridge.setString(1, juegoId);
             ResultSet rs = bridge.executeQuery();
@@ -149,10 +149,20 @@ public class ControladorTienda {
                 return new Juego(
                         rs.getString("id"),
                         rs.getString("titulo"),
-                        rs.getDouble("precio")
+                        rs.getDouble("precio"),
+                        rs.getString("genero"),
+                        rs.getString("descripcion"),
+                        rs.getString("imagenurl"),
+                        rs.getDate("fechalanzamiento"),
+                        rs.getString("desarrollador"),
+                        rs.getDouble("calificacion")
                 );
             }
         }        
         return null;
+    }
+    
+    public Usuario getUser(){
+        return usuarioActual;
     }
 }

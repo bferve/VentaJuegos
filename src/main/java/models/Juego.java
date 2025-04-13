@@ -23,9 +23,9 @@ public class Juego {
         this.precio = precio;
     }
     
-    public Juego(String id, String titulo, String descripcion, Double precio,
-            String genero, String imagenURL, Date fechaLanzamiento,
-            String desarrollador) {
+    public Juego(String id, String titulo,  double precio,String genero,String descripcion,
+            String imagenURL, Date fechaLanzamiento,
+            String desarrollador, double calificacion) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
