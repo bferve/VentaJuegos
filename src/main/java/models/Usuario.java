@@ -4,10 +4,16 @@
  */
 package models;
 
-/**
- *
- * @author Boris Veliz
- */
+
 public class Usuario {
+    private String usuario_id;
+
+    public String getUsuario_id() {
+        return usuario_id;
+    }
+
+    public void setUsuario_id(String usuario_id) {
+        this.usuario_id = usuario_id;
+    }
     
 }
