@@ -44,19 +44,7 @@ public class VentanaPrincipal extends JFrame {
         }
         panelBase.add(panelCategorias);
 
-        // Panel central para juegos destacados
-        JPanel panelDestacados = new JPanel();
-        panelDestacados.setBackground(new Color(70, 70, 70));
-        panelDestacados.setLayout(null);
-        panelDestacados.setBounds(210, 70, 560, 450);
-
-        JLabel tituloDestacados = new JLabel("Juegos Destacados");
-        tituloDestacados.setFont(new Font("Arial", Font.BOLD, 20));
-        tituloDestacados.setForeground(Color.WHITE);
-        tituloDestacados.setBounds(180, 10, 200, 30);
-        panelDestacados.add(tituloDestacados);
-
-       
+     
 
         // Título principal
         JLabel titulo = new JLabel("Bienvenido a la Tienda de Juegos");
