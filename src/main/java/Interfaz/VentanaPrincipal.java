@@ -9,57 +9,65 @@ public class VentanaPrincipal extends JFrame {
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setLayout(null);
 
-        // Crear barra de tareas (JMenuBar)
-        JMenuBar barraMenu = new JMenuBar();
-        
-        // Menú "Inicio"
-        JMenu menuInicio = new JMenu("Inicio");
-        JMenuItem opcionHome = new JMenuItem("Página Principal");
-        menuInicio.add(opcionHome);
-        
-        // Menú "Categorías"
-        JMenu menuCategorias = new JMenu("Categorías");
-        JMenuItem opcionAccion = new JMenuItem("Acción");
-        JMenuItem opcionAventura = new JMenuItem("Aventura");
-        JMenuItem opcionDeportes = new JMenuItem("Deportes");
-        menuCategorias.add(opcionAccion);
-        menuCategorias.add(opcionAventura);
-        menuCategorias.add(opcionDeportes);
-        
-        // Menú "Ayuda"
-        JMenu menuAyuda = new JMenu("Ayuda");
-        JMenuItem opcionContacto = new JMenuItem("Contacto");
-        JMenuItem opcionFAQ = new JMenuItem("Preguntas Frecuentes");
-        menuAyuda.add(opcionContacto);
-        menuAyuda.add(opcionFAQ);
-        
-        // Agregar menús a la barra
-        barraMenu.add(menuInicio);
-        barraMenu.add(menuCategorias);
-        barraMenu.add(menuAyuda);
-        
-        // Establecer la barra de tareas en la ventana
-        setJMenuBar(barraMenu);
+        // Imagen de fondo
+        JLabel fondo = new JLabel(new ImageIcon("C:/Users/Asus tuf a16/Documents/F/sis2/SIS 2/LOGO DEL SISTEMA/Logo.jpg"));
+        fondo.setBounds(0, 0, 800, 600);
+        add(fondo);
 
-        // Panel base con fondo gris oscuro
+        // Panel transparente para los elementos principales
         JPanel panelBase = new JPanel();
-        panelBase.setBackground(new Color(50, 50, 50));
+        panelBase.setOpaque(false);
         panelBase.setLayout(null);
+        panelBase.setBounds(0, 0, 800, 600);
+
+        // Panel lateral de categorias
+        JPanel panelCategorias = new JPanel();
+        panelCategorias.setBackground(new Color(30, 30, 30));
+        panelCategorias.setLayout(null);
+        panelCategorias.setBounds(0, 0, 200, 600);
+
+        JLabel tituloCategorias = new JLabel("Categorías");
+        tituloCategorias.setFont(new Font("Arial", Font.BOLD, 18));
+        tituloCategorias.setForeground(Color.WHITE);
+        tituloCategorias.setBounds(50, 20, 100, 30);
+        panelCategorias.add(tituloCategorias);
+
+        String[] categorias = {"Acción", "Aventura", "Deportes", "Simulación", "Estrategia"};
+        int yPosition = 70;
+        for (String categoria : categorias) {
+            JButton botonCategoria = new JButton(categoria);
+            botonCategoria.setBounds(20, yPosition, 160, 30);
+            panelCategorias.add(botonCategoria);
+            yPosition += 40;
+        }
+        panelBase.add(panelCategorias);
+
+        // Panel central para juegos destacados
+        JPanel panelDestacados = new JPanel();
+        panelDestacados.setBackground(new Color(70, 70, 70));
+        panelDestacados.setLayout(null);
+        panelDestacados.setBounds(210, 70, 560, 450);
+
+        JLabel tituloDestacados = new JLabel("Juegos Destacados");
+        tituloDestacados.setFont(new Font("Arial", Font.BOLD, 20));
+        tituloDestacados.setForeground(Color.WHITE);
+        tituloDestacados.setBounds(180, 10, 200, 30);
+        panelDestacados.add(tituloDestacados);
+
+       
 
         // Título principal
         JLabel titulo = new JLabel("Bienvenido a la Tienda de Juegos");
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
         titulo.setForeground(Color.WHITE);
-        titulo.setBounds(200, 20, 400, 40);
+        titulo.setBounds(250, 20, 400, 40);
         panelBase.add(titulo);
 
-        // Botón de ejemplo
-        JButton botonExplorar = new JButton("Explorar Juegos");
-        botonExplorar.setBounds(300, 100, 200, 40);
-        panelBase.add(botonExplorar);
+        fondo.setLayout(null);
+        fondo.add(panelBase);
 
-        add(panelBase);
         setVisible(true);
     }
 
