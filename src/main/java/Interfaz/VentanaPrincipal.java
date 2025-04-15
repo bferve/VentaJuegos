@@ -1,5 +1,6 @@
 package Interfaz;
 
+import Controlador.ControladorLogin;
 import javax.swing.*;
 import java.awt.*;
 
@@ -44,7 +45,11 @@ public class VentanaPrincipal extends JFrame {
         }
         panelBase.add(panelCategorias);
 
-     
+        // Botón de "Iniciar Sesión"
+        JButton botonIniciarSesion = new JButton("Iniciar Sesión");
+        botonIniciarSesion.setBounds(250, 500, 150, 40);
+        botonIniciarSesion.addActionListener(e -> abrirVentanaLogin()); // Acción para abrir la ventana de login
+        panelBase.add(botonIniciarSesion);
 
         // Título principal
         JLabel titulo = new JLabel("Bienvenido a la Tienda de Juegos");
@@ -58,6 +63,52 @@ public class VentanaPrincipal extends JFrame {
 
         setVisible(true);
     }
+    // Método para abrir la ventana de inicio de sesión
+
+    
+    // para abrir ventana de login
+    private void abrirVentanaLogin() {
+    JFrame loginFrame = new JFrame("Iniciar Sesión");
+    loginFrame.setSize(400, 300);
+    loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    loginFrame.setLocationRelativeTo(null);
+    loginFrame.setLayout(null);
+
+    JLabel usuarioLabel = new JLabel("Usuario:");
+    usuarioLabel.setBounds(50, 50, 100, 30);
+    JTextField usuarioField = new JTextField();
+    usuarioField.setBounds(150, 50, 200, 30);
+
+    JLabel contraseñaLabel = new JLabel("Contraseña:");
+    contraseñaLabel.setBounds(50, 100, 100, 30);
+    JPasswordField contraseñaField = new JPasswordField();
+    contraseñaField.setBounds(150, 100, 200, 30);
+
+    JButton botonLogin = new JButton("Confirmar");
+    botonLogin.setBounds(150, 170, 100, 30);
+
+    // Acción al presionar el botón
+    botonLogin.addActionListener(e -> {
+        String usuario = usuarioField.getText();
+        String contraseña = new String(contraseñaField.getPassword());
+
+        ControladorLogin controlador = new ControladorLogin();
+        if (controlador.validarCredenciales(usuario, contraseña)) {
+            loginFrame.dispose(); // Cierra la ventana de login
+            new VentanaUsuario(usuario); // Abre la ventana de usuario registrado
+        } else {
+            JOptionPane.showMessageDialog(loginFrame, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    });
+
+    loginFrame.add(usuarioLabel);
+    loginFrame.add(usuarioField);
+    loginFrame.add(contraseñaLabel);
+    loginFrame.add(contraseñaField);
+    loginFrame.add(botonLogin);
+
+    loginFrame.setVisible(true);
+}
 
     public static void main(String[] args) {
         new VentanaPrincipal();
