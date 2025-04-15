@@ -17,11 +17,11 @@ public class Conexion {
         try{
             con = DriverManager.getConnection(url,user,pass);
             System.out.println("Conexion Exitosa");
-            
         }catch(SQLException e){
-            
             e.printStackTrace();
         }
         return con;
     }  
+    
+    
 }
