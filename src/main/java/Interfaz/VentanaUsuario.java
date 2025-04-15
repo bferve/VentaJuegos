@@ -6,10 +6,14 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class VentanaUsuario extends JFrame {
-    private ArrayList<String> carrito; // Lista para almacenar los juegos en el carrito
+    private ArrayList<String> carrito; // Lista de juegos en el carrito
+    private ArrayList<Integer> precios; // Lista de precios asociados a los juegos
+    private JLabel precioTotalLabel; // Etiqueta para mostrar el precio total
 
     public VentanaUsuario(String usuario) {
-        carrito = new ArrayList<>(); // Inicializamos el carrito
+        carrito = new ArrayList<>();
+        precios = new ArrayList<>();
+
         setTitle("Área de Usuario");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -37,9 +41,9 @@ public class VentanaUsuario extends JFrame {
         // Tabla para mostrar los juegos
         String[] columnas = {"Juego", "Precio", "Acción"};
         String[][] datos = {
-            {"Juego 1", "$10", "Agregar al Carrito"},
-            {"Juego 2", "$15", "Agregar al Carrito"},
-            {"Juego 3", "$20", "Agregar al Carrito"}
+            {"Juego 1", "10", "Agregar al Carrito"},
+            {"Juego 2", "15", "Agregar al Carrito"},
+            {"Juego 3", "20", "Agregar al Carrito"}
         };
 
         DefaultTableModel modeloTabla = new DefaultTableModel(datos, columnas);
@@ -76,16 +80,25 @@ public class VentanaUsuario extends JFrame {
         scrollCarrito.setBounds(20, 50, 260, 300);
         panelCarrito.add(scrollCarrito);
 
+        // Etiqueta para mostrar el precio total
+        precioTotalLabel = new JLabel("Total: $0");
+        precioTotalLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        precioTotalLabel.setForeground(Color.WHITE);
+        precioTotalLabel.setBounds(20, 360, 200, 30);
+        panelCarrito.add(precioTotalLabel);
+
         // Botón para confirmar la compra
         JButton botonConfirmarCompra = new JButton("Confirmar Compra");
-        botonConfirmarCompra.setBounds(75, 360, 150, 30);
+        botonConfirmarCompra.setBounds(140, 360, 150, 30); //aqui puedes mover los botonces su posicionamiento
         botonConfirmarCompra.addActionListener(e -> {
             if (carrito.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "El carrito está vacío.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, "Has comprado: " + String.join(", ", carrito), "Compra Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Has comprado: " + String.join(", ", carrito) + "\nTotal: $" + calcularPrecioTotal(), "Compra Exitosa", JOptionPane.INFORMATION_MESSAGE);
                 carrito.clear();
+                precios.clear();
                 modeloCarrito.clear(); // Limpia el carrito después de confirmar
+                actualizarPrecioTotal();
             }
         });
         panelCarrito.add(botonConfirmarCompra);
@@ -98,9 +111,12 @@ public class VentanaUsuario extends JFrame {
             int filaSeleccionada = tablaJuegos.getSelectedRow();
             if (filaSeleccionada != -1) {
                 String juegoSeleccionado = (String) modeloTabla.getValueAt(filaSeleccionada, 0);
+                int precioJuego = Integer.parseInt((String) modeloTabla.getValueAt(filaSeleccionada, 1));
                 if (!carrito.contains(juegoSeleccionado)) { // Evitar duplicados
                     carrito.add(juegoSeleccionado);
+                    precios.add(precioJuego);
                     modeloCarrito.addElement(juegoSeleccionado);
+                    actualizarPrecioTotal();
                     JOptionPane.showMessageDialog(this, juegoSeleccionado + " agregado al carrito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "El juego ya está en el carrito.", "Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -112,5 +128,19 @@ public class VentanaUsuario extends JFrame {
         panelJuegos.add(botonAgregar);
 
         setVisible(true);
+    }
+
+    // Método para calcular el precio total
+    private int calcularPrecioTotal() {
+        int total = 0;
+        for (int precio : precios) {
+            total += precio;
+        }
+        return total;
+    }
+
+    // Método para actualizar la etiqueta del precio total
+    private void actualizarPrecioTotal() {
+        precioTotalLabel.setText("Total: $" + calcularPrecioTotal());
     }
 }
