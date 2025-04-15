@@ -109,7 +109,7 @@ public class VentanaPrincipal extends JFrame {
 
     loginFrame.setVisible(true);
 }
-
+    //hola
     public static void main(String[] args) {
         new VentanaPrincipal();
     }
