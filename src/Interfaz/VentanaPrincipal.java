@@ -59,6 +59,7 @@ public class VentanaPrincipal extends JFrame {
         setVisible(true);
     }
     // HOLA
+      // COMO ESTAS
     public static void main(String[] args) {
         new VentanaPrincipal();
     }
