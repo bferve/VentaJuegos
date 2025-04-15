@@ -1,5 +1,5 @@
 
-package controllers;
+package Controlador;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import models.Juego;
-import models.Usuario;
+import Modelo.Juego;
+import Modelo.Usuario;
 
 public class ControladorTienda {
     

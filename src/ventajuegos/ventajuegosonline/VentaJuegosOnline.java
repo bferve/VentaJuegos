@@ -1,11 +1,11 @@
 
 package ventajuegos.ventajuegosonline;
 
-import controllers.ControladorTienda;
+import Controlador.ControladorTienda;
 import java.sql.SQLException;
 import java.util.List;
-import models.Juego;
-import models.Usuario;
+import Modelo.Juego;
+import Modelo.Usuario;
 
 public class VentaJuegosOnline {
 
@@ -39,4 +39,9 @@ public class VentaJuegosOnline {
         
         
     }
+
 }
+
+    
+
+

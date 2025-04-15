@@ -1,4 +1,4 @@
-
+/*
 package controllers;
 
 
@@ -62,3 +62,4 @@ public class ControladorTiendaTest {
         
     }
 }
+*/

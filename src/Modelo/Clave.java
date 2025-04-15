@@ -1,5 +1,5 @@
 
-package models;
+package Modelo;
 
 public class Clave {
     
