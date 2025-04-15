@@ -60,6 +60,7 @@ public class VentanaPrincipal extends JFrame {
     }
     // HOLA
       // COMO ESTAS
+        // RESPONDE
     public static void main(String[] args) {
         new VentanaPrincipal();
     }
